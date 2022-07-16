@@ -1,0 +1,15 @@
+.region{
+    display:flex ; 
+    justify-content: space-between;
+    width : 100%;
+    .regionContainer{
+        flex : 6;
+        .mainContainer {
+            display :  flex;
+            justify-content : space-between;
+            padding : 20px;
+            align-items : start;
+            gap : 20px;
+        }
+    }
+}

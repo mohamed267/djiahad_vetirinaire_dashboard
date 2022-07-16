@@ -1,0 +1,84 @@
+$start : left ;
+$end : right;
+.datatable{
+    height : 600px;
+    width : 100%;
+    padding : 20px;
+    .t-header-1{
+        border-top: none;
+        padding-left: 25px;
+        padding-right: 25px;
+        border: none;
+        background-color: #7367f0;
+        text-transform: capitalize;
+        font-size: 0.8rem;
+        text-align: center;
+        padding: 15px 25px;
+        white-space: nowrap;
+        &:nth-child(1){
+            text-align: #{$start};
+            font-weight: 600;
+        }
+    }
+
+    .MuiDataGrid-columnHeaders{
+        background-color: #7367f0;
+        *{
+            color: #ffffff;
+        }
+    }
+
+
+    .MuiDataGrid-columnHeadersInner{
+        width : 100%;
+        display : flex ;
+        justify-content : space-between;
+        .MuiDataGrid-columnHeader{
+            &:not(:first-child){
+                max-width : 100% !important;
+                flex : 1;
+            }
+            &:last-child{
+                .MuiDataGrid-columnSeparator{
+                    display : none
+                }
+            }
+        }
+    }
+
+    .MuiDataGrid-virtualScrollerRenderZone{
+        width : 100% !important;
+    }
+
+    .MuiDataGrid-row{
+        width : 100% !important;
+        display : flex !important;
+        justify-content : space-between;
+        .MuiDataGrid-cell{
+            &:not(:first-child){
+                max-width: 100% !important;
+                flex : 1;
+            }
+
+            &:last-child{
+                display : none
+            }
+        }
+
+        .btn-show-more{
+            padding : 5px;
+            background-color :  #7367f0;
+            border-radius : 2px;
+            color : #fff
+        }
+        
+    }
+
+    
+
+
+    
+    
+
+
+}

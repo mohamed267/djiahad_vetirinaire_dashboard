@@ -1,0 +1,45 @@
+$start : left;
+$end : right ;
+
+.table{
+    .head-table{
+        .tr{
+            .th{
+                border-top: none;
+                padding-left: 25px;
+                padding-right: 25px;
+                border: none;
+                color: #ffffff;
+                background-color: #7367f0;
+                text-transform: capitalize;
+                font-size: 0.8rem;
+                text-align: center;
+                padding: 15px 25px;
+                white-space: nowrap;
+                &:nth-child(1){
+                    text-align: #{$start};
+                    font-weight: 600;
+                }
+            }
+        }
+    }
+    .tr{
+        .td{
+            padding: 15px 25px;
+            &:nth-child(1){
+                text-align: #{$start};
+            }
+            .cellWrapper{
+                display : flex;
+                align-items: center;
+                gap : 2px;
+                text-transform: capitalize;
+                .avatar {
+                    width: 30px;
+                    height : 30px;
+                    border-radius: 50%;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,27 @@
+.home{
+    display : flex;
+    .homeContainer{
+        max-width: calc(100% - 250px) !important;
+        .widgets  , .charts{
+            display : flex;
+            flex-wrap: wrap;
+            // justify-content: space-between;
+            padding : 20px;
+            gap : 20px
+        }
+
+        .listContainer {
+            --webkit-box-shadow : 2px 4px 10px 1px rgb(0,0,0,.47) ;
+            box-shadow : 2px 4px 10px 1px rgb(201,201,201,.47);
+            padding : 20px;
+            margin:20px;
+            .title{
+                color :  rgb(117, 115, 115);
+                font-size: 18px;
+                text-transform : capitalize;
+                margin-bottom : 15px;
+            }
+
+        }
+    }
+}
