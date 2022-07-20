@@ -3,7 +3,7 @@
 
 const New = ()=>{
     return(
-        <p>new</p>
+        <div>new</div>
     )
 }
 

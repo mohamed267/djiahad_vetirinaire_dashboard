@@ -2,6 +2,13 @@
     display:flex ; 
     justify-content: space-between;
     width : 100%;
+    .edit-button{
+        padding: 10px;
+    background-color: #333333;
+    color: #fff;
+    border-radius: 50%;
+    margin: 10px;
+    }
     .documentContainer{
         flex : 6;
         .document_details{   

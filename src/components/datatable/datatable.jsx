@@ -51,10 +51,10 @@ function CustomPagination() {
 
 
 
-const Datatable  = ({structure , row ,  data , direct, dataCode})=>{
-  const {t} = useTranslation("common")
-  const colums = extractColumns(structure.columns ,  t);
-  console.log("data is " , data)
+const Datatable  = ({structure , row ,  data , direct,dataKey ,  dataCode})=>{
+    const {t} = useTranslation("common")
+    const colums = extractColumns(structure.columns ,  t);
+    console.log("data is " , data)
 
     return(
     <div 
@@ -62,11 +62,7 @@ const Datatable  = ({structure , row ,  data , direct, dataCode})=>{
             <DataGrid
                 localeText={ arSD.components.MuiDataGrid.defaultProps.localeText}
                 headerClassName="header-class"
-                rows={
-                  (direct && exportData(row , structure.field)) || 
-                  (data 
-                  && data[dataCode] &&   
-                  data[dataCode][structure.keyFetchAll] || [])}
+                rows={data[dataKey]}
                 columns={colums}
                 pageSize={9}
                 getRowId={(row) => row[structure.keyId]}
@@ -74,7 +70,8 @@ const Datatable  = ({structure , row ,  data , direct, dataCode})=>{
                 checkboxSelection
                 disableSelectionOnClick
                 components={{
-                    Pagination: CustomPagination,
+                    Pagination: CustomPagination ,
+                    
                 }}
             />
         

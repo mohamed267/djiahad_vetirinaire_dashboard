@@ -28,11 +28,29 @@ export const getRegions = async (query) => {
     // return await axios.get('global/teacher', { email, password })
 }
 
+export const createRegion = async (data) => {
+    const response =  await axios.post(`region`,data)
+    return (response)
+}
+
+
+export const updateRegions =  async (query , param) => {
+    const data = 
+    await axios.put(`region`, query , {
+        params : {
+            ...param
+        }
+    })
+     
+    return (data)
+    // return await axios.get('global/teacher', { email, password })
+}
 
 
 
 
-const RegionApi = { getRegion , getRegions}
+
+const RegionApi = { getRegion , getRegions , createRegion , updateRegions}
 
 export default RegionApi
 

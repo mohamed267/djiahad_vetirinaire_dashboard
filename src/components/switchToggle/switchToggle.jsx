@@ -2,15 +2,16 @@ import {useState , useEffect} from  "react"
 import {useTranslation} from 'react-i18next'
 import {Form , FormGroup ,Label , Input } from  "reactstrap"
 import "./switchToggle.scss";
-const SwitchToogle = ({id, value,name ,  on ,checkedOn ,   off, label})=>{
-    const [checked , setChecked] = useState(value)
+const SwitchToogle = ({id, value,name , field,  on ,checkedOn ,   off, label , changed})=>{
+    
 
 
 
 
 
     const toggleChecked = ()=>{
-        setChecked(!checked)
+        console.log("field ", field)
+        changed(field , !value)
     }
 
     const handleChecked = (checkedOn , value)=>{
@@ -31,7 +32,7 @@ const SwitchToogle = ({id, value,name ,  on ,checkedOn ,   off, label})=>{
                     type="checkbox"
                     id={id}
                 />
-                <div className={`toggleGroup ${!handleChecked(checkedOn , checked ) ?  "checked" : ""}`}>
+                <div className={`toggleGroup ${!handleChecked(checkedOn , value ) ?  "checked" : ""}`}>
                     <Label className="btn--success" for={id} >
                         {on}
                     </Label>

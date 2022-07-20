@@ -17,8 +17,10 @@ import routes from './routes'
 import Loader from './components/loader/loader';
 
 import {getRegions} from "./store/regionReducer"
-import {getWilayas} from "./store/wilayaReducer"
+import {getRegionWilayas , getWilayas} from "./store/wilayaReducer"
 import {getCommunes} from "./store/communeReducer"
+import {getFieldGroups} from "./store/fieldGroupReducer"
+import {getFormFieldsNav} from "./store/formFieldReducer"
 
 
 export const renderRoutes = (routes = []) => (
@@ -48,15 +50,25 @@ export const renderRoutes = (routes = []) => (
 
 function App(){
     const  region_id =  useSelector(state=> state.region.region_id)
+    const refreshRegion = useSelector(state=>state.region.refresh)
     const  wilaya_id =  useSelector(state=> state.wilaya.wilaya_id)
     const dispatch = useDispatch()
 
-
-    useEffect(()=>{
+    useEffect( ()=>{
         dispatch(getRegions({}))
+    }, [refreshRegion])
+    useEffect(()=>{
+        dispatch(getFieldGroups({}))
+        dispatch(getRegions({}))
+        dispatch(getFormFieldsNav({}))
     } , [])
     useEffect(()=>{
-        dispatch(getWilayas({region_id}))
+        console.log("our region ", region_id)
+        if(region_id){
+            dispatch(getRegionWilayas({}))
+        }else{
+            dispatch(getWilayas({region_id}))
+        }
     } , [region_id])
     useEffect(()=>{
         dispatch(getCommunes({wilaya_id}))

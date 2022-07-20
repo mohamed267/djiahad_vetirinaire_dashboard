@@ -146,5 +146,72 @@ const ads = {
 }
 
 
-export default {users , demands , services , ads};
+const document = {
+    keyFetchAll :"forms",
+    keyId : "form_id",
+    columns : [
+        { 
+            field: 'form_id', headerName: ['ID']
+        },
+         { 
+            field: 'farm_name', headerName: ['nom de farme']
+        },
+        { 
+            field: {
+                field : 'date'
+            }, headerName: ['date de consultation'] ,
+            component : "date",
+        },
+        {
+            field: {
+                fields : [
+                    {
+                        type : "linkButton",
+                        link : "/document",
+                        field : "form_id",
+                        class:"las la-desktop btn-show-more"
+                    } 
+                ],
+            },
+            
+            component : "composedLined",
+            sortable: false,
+            headerName: ['actions'] 
+        }
+    ]
+}
+
+const form_field = {
+    keyFetchAll :"forms",
+    keyId : "form_field_id",
+    columns : [
+        { 
+            field: 'form_field_id', headerName: ['ID']
+        },
+         { 
+            field: 'form_field_name', headerName: ['nom de champs']
+        },
+        { 
+            field: 'form_field_type', headerName: ['type de champs']
+        },
+        {
+            field: {
+                fields : [
+                    {
+                        type : "linkButton",
+                        link : "/form_field",
+                        field : "form_field_id",
+                        class:"las la-desktop btn-show-more"
+                    } 
+                ],
+            },
+            
+            component : "composedLined",
+            sortable: false,
+            headerName: ['actions'] 
+        }
+    ]
+}
+
+export default {document , form_field};
 

@@ -16,10 +16,22 @@ export const getWilayas = async (query) => {
 }
 
 
+export const getRegionWilayas = async (query) =>{
+    const data = 
+    await axios.get(`address/wilaya/region`, {
+        params : {
+            ...params(query , "eq" , true)
+        }
+    })
+    
+    return (data)
+}
 
 
 
-const WilayaApi = { getWilayas}
+
+
+const WilayaApi = { getWilayas ,getRegionWilayas}
 
 export default WilayaApi
 

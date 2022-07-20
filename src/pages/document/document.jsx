@@ -1,5 +1,6 @@
 import {useState , useEffect} from "react"
 import {useDispatch , useSelector } from "react-redux"
+import {useLocation  ,Link,   useParams} from 'react-router-dom'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import Sidebar from  "../../components/sidebar/sidebar"
 import Navbar from "../../components/navbar/navbar"
@@ -8,7 +9,7 @@ import "./document.scss"
 
 import {getForm , setDataExtracted  , setFilteredData} from "../../store/formReducer"
 import {extractData } from "../../utils/document"
-
+import {toLocal} from "../../utils/date"
 
 
 
@@ -64,6 +65,7 @@ function getWindowSize() {
 
 const Document = ()=>{
     const dispatch = useDispatch()
+    const {form_id} = useParams()
     const {form } = useSelector(state=>state.form.details)
     const [page , setPage] = useState(0)
     const [pages , setPages] = useState(0);
@@ -77,16 +79,19 @@ const Document = ()=>{
     function handleWindowResize() {
         setIsMobile(getWindowSize().innerWidth < 600);
     }
+
     useEffect(() => {    
         setIsMobile(getWindowSize().innerWidth < 600);
         window.addEventListener('resize', handleWindowResize);
-        dispatch(getForm({}))
+        dispatch(getForm({form_id}))
     }, []);
     useEffect(()=>{
         setPages(filtereddata.length ? filtereddata.length : 0)
     },[filtereddata ])
 
     useEffect( ()=>{
+        
+        console.log("fildd  ", form)
         let extracted = extractData(form)
         let filtered = isMobile ?filterData(extracted) : [extracted]
         setFiltereddata(filtered)
@@ -103,20 +108,26 @@ const Document = ()=>{
                 <Navbar />
 
                 <Container className="py-4">
-                    <Row>
-                        <Breadcrumb>
-                            <BreadcrumbItem><a href="#">khenchela</a></BreadcrumbItem>
-                            <BreadcrumbItem active>Ferme bouallage</BreadcrumbItem>
+                    <Row className="justify-content-between align-items-center">
+                        <Breadcrumb className="col-xl-11">
+                            <BreadcrumbItem>{form? form.region ? form.region.region_name : "" :""}</BreadcrumbItem>
+                            <BreadcrumbItem active>{form ? form.farm_name :""}</BreadcrumbItem>
                         </Breadcrumb>
+                        <Col xl={1}>
+                            <Link to={`/document/edit/${form_id}`}>
+                        <i className="edit-button las la-pen"></i>
+                            </Link>
+                        </Col>
                     </Row>
                     <div className="document_details shadow">
                             <Row className="top p-3 justify-content-between">
                                 <Col className="d-flex flex-wrap align-items-baseline">
                                     <h1 className="title_enquete mr-3">enquete épidémiologique</h1>
-                                    <p className="ferme"> ferme boulage</p>
+                                    <p className="ferme"> {form ? form.farm_name :""}</p>
                                 </Col>
                                 <Col>
-                                    <h1 className="time">date : 10-06-2001</h1>
+                                    <h1 className="time">date : {
+                                    form ?form.date ? toLocal(form.date) :"" : ""}</h1>
                                 </Col>
                             </Row>
                             

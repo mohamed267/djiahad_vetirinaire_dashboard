@@ -19,15 +19,75 @@ const routes = [
     {
         exact: true,
         guard: AuthGuard,
+        path: '/region/new',
+        component: lazy(() => import('./pages/region/region'))
+    },
+    {
+        exact: true,
+        guard: AuthGuard,
         path: '/region/:region_id',
         component: lazy(() => import('./pages/region/region'))
     },
     {
         exact: true,
         guard: AuthGuard,
-        path: '/document',
+        path: '/form_field',
+        component: lazy(() => import('./pages/form_field/list'))
+    },
+   
+    {
+        exact: true,
+        guard: AuthGuard,
+        path: '/form_field/new',
+        component: lazy(() => import('./pages/form_field/form_field'))
+    },
+    {
+        exact: true,
+        guard: AuthGuard,
+        path: '/form_field/:form_field_id',
+        component: lazy(() => import('./pages/form_field/single'))
+    },
+    {
+        exact: true,
+        guard: AuthGuard,
+        path: '/document/filter',
+        component: lazy(() => import('./pages/list/list'))
+    },
+    {
+        exact: true,
+        guard: AuthGuard,
+        path: '/document/filter/:filter',
+        component: lazy(() => import('./pages/list/list'))
+    },
+    
+    {
+        exact: true,
+        guard: AuthGuard,
+        path: '/document/new',
+        component: lazy(() => import('./pages/document/new'))
+    },
+    {
+        exact: true,
+        guard: AuthGuard,
+        path: '/document/:form_id',
         component: lazy(() => import('./pages/document/document'))
     },
+    {
+        exact: true,
+        guard: AuthGuard,
+        path: '/document/edit/:form_id',
+        component: lazy(() => import('./pages/document/single'))
+    },
+
+    /*nav */
+    {
+        exact: true,
+        guard: AuthGuard,
+        path: '/nav',
+        component: lazy(() => import('./pages/nav/nav'))
+    },
+
+
 ];
 
 export default routes;

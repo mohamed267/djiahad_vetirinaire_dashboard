@@ -10,12 +10,12 @@ const menuItems = {
                     title: 'dashboard',
                     type: 'item',
                     url: '/',
-                    icon: 'las la-home'
+                    icon: 'las la-home',
                 }
             ]
         },
         {
-            id: 'users-menu',
+            id: 'regions-menu',
             title: 'rigion',
             type: 'group',
             children: [
@@ -23,9 +23,38 @@ const menuItems = {
                     id: 'rigions',
                     title: 'rigions',
                     type: 'collapse',
-                    url: '/payments',
-                    icon: 'las la-wallet',
+                    url: '/region/new',
+                    icon: 'las la-globe'
                 },
+            ]
+        },
+        {
+            id: 'formulaire-menu',
+            title: 'formulaire',
+            type: 'group',
+            children: [
+                {
+                    id: 'form_field',
+                    title: 'field form',
+                    type: 'collapse',
+                    url: '/form_field',
+                    icon: 'las la-globe',
+                    children : [
+                        {
+                            id: 'form_field',
+                            title: 'nouvelle champ ',
+                            type: 'item',
+                            url: '/form_field/new'
+                        },
+                    ]
+                },
+                {
+                    id: 'formulaires_form',
+                    title: 'formulaires',
+                    type: 'item',
+                    url: '/document/new',
+                    icon: 'las la-file-alt',
+                }
             ]
         },
         {
@@ -35,9 +64,15 @@ const menuItems = {
             children: [
                 {
                     id: 'ads',
-                    title: 'ads',
+                    title: 'filter navigation',
                     type: 'item',
-                    url: '/ads',
+                    url: '/nav',
+                    icon: 'las la-directions',
+                },{
+                    id: 'ads',
+                    title: 'filter navigation',
+                    type: 'item',
+                    url: '/nav',
                     icon: '"icon las la-ad',
                 },
                  {

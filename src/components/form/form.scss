@@ -21,14 +21,40 @@
         color: #495057;
         border: 1px solid #ced4da;
         &:focus{
-            border-color: #7367f0;
+            border-color: #474747;
             box-shadow: 0 3px 9px rgb(50 50 9 / 5%), 3px 4px 8px rgb(115 103 240 / 10%);
         }
 
 
     }
+
+    textarea{
+        padding: 10px 20px;
+        background-color: transparent;
+        font-size: 0.875rem !important;
+        width : 100%;
+        color: #495057;
+        border: 1px solid #ced4da;
+        min-height: 150px;
+        &:focus{
+            border-color: #474747;
+            box-shadow: 0 3px 9px rgb(50 50 9 / 5%), 3px 4px 8px rgb(115 103 240 / 10%);
+        }
+    }
+    .map-button{
+        text-transform: capitalize;
+        font-size: .9em;
+        font-weight: 600;
+        padding: 8px 25px;
+        border-radius: 15px;
+        i{
+            font-size: 1.4em;
+            margin-left: 15px;
+            font-weight: 700
+        }
+    }
     .btn--primary{
-        background-color: #7367f0 !important;
+        background-color: #474747 !important;
         padding: 0.5rem 1rem;
         font-size: .9rem;
         line-height: 1.5;

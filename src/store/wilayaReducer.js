@@ -66,9 +66,41 @@ export const getWilayas = createAsyncThunk(
     }
 )
 
+
+export const getRegionWilayas = createAsyncThunk(
+    "wilaya/region/fetchAll",
+    async (query, thunkAPI) => {
+        try {
+            const response = await WilayaApi.getRegionWilayas(query)
+            const wilaya = response.data.data
+
+            console.log("wilayas ", wilaya)
+
+            return (wilaya)
+
+        } catch (error) {
+            const message =
+                (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                error.message ||
+                error.toString();
+            thunkAPI.dispatch(setMessage(message));
+            return thunkAPI.rejectWithValue();
+        }
+
+    }
+)
+
+
 export const formSlice = createSlice({
     name: 'wilaya',
     initialState,
+    reducers : {
+        setWilaya : (state,  action) =>{
+            state.wilaya_id = action.payload.wilaya_id
+        }
+    },
     extraReducers: {
         /*get wilayas */
         [getWilayas.pending]: (state, action) => {
@@ -98,6 +130,20 @@ export const formSlice = createSlice({
             state.details.error = true;
         },
 
+        /*get region  wilayas */
+        [getRegionWilayas.pending]: (state, action) => {
+            state.details.loading = true
+        },
+        [getRegionWilayas.fulfilled]: (state, action) => {
+            state.wilayas = action.payload
+            state.loading = false
+            state.error = false
+        },
+        [getRegionWilayas.rejected]: (state, action) => {
+            state.loading = false;
+            state.error = true;
+        },
+
 
 
     }
@@ -107,7 +153,7 @@ export const formSlice = createSlice({
 
 const { reducer, actions } = formSlice;
 
-// export const { } = actions
+export const { setWilaya} = actions
 
 export default reducer
 

@@ -1,16 +1,17 @@
 import React from 'react'
 import "./sidebar.scss"
 import {Link} from 'react-router-dom'
+import {useSelector} from "react-redux"
 
 // import HomeIcon from '@mui/icons-material/HomeOutlined';
 import { useTranslation } from 'react-i18next';
 import menuItems from  "../../menu-items"
 import MenuItems  from  "./menuItems/menuItems"
-
-import Logo from "../../assets/images/logo.svg"
+import Logo from "../../assets/images/logo.png"
 
 const Sidebar = () => {
   const {t} =  useTranslation("common")
+  const nav = useSelector(state=>state.nav.nav)
   return (
       <>
          <div className="sideBarImage" style={{backgroundImage : `url(${Logo})` }}>
@@ -26,7 +27,39 @@ const Sidebar = () => {
           <div className="center">
             <ul>
             {
-              menuItems && menuItems.items && <MenuItems   items = {menuItems.items} />
+              menuItems && menuItems.items && 
+              <MenuItems   
+                items = {
+                  [ 
+                      {
+                        id: 'filter',
+                        title: 'filter',
+                        type: 'group',
+                        children: [
+                            {
+                              id: nav.name,
+                              title: nav.name,
+                              type: 'collapse',
+                              url: '/document/filter',
+                              icon: 'las la-home',
+                              children : nav.options.map(el=>{
+                                return {
+                                    title: el,
+                                    type: 'item',
+                                    url: '/document/filter/'+el
+                                }
+
+                              })
+
+                            }
+                        ]
+                      } 
+                    
+                    ,
+                    ...menuItems.items,
+                  ]
+                } 
+              />
             } 
             </ul>
             {/* <ul>

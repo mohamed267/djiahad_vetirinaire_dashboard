@@ -6,7 +6,15 @@
     text-decoration: none;
     box-sizing: border-box;
     margin :  0  0 0 0;
-    padding :  0  0 0 0
+    padding :  0  0 0 0;
+    
+}
+
+
+button {
+    outline :0 ;
+    border :0;  
+    background-color: transparent
 }
 
 body{
@@ -34,4 +42,8 @@ input:not([type="radio"]), textarea {
     border-radius: 5px;
     background-color: transparent;
     font-size: 0.875rem !important;
+}
+
+.z-index-10000 { 
+    z-index: 10000; 
 }

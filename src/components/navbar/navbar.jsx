@@ -42,14 +42,14 @@ const Navbar = () => {
         </div>
         <ul className="right">
           <li className="globe">
-            <LanguageSelector  isOpen={opened.language}  toggle={()=>toggleOpened("language")} />
+            {/* <LanguageSelector  isOpen={opened.language}  toggle={()=>toggleOpened("language")} /> */}
            
           </li>
-          <li className="search-icon">
+          {/* <li className="search-icon">
             <button>  
             <i onClick={()=>{toggleOpened("search")}} className="las la-search"> </i>
             </button>
-          </li>
+          </li> */}
           <li  className="not">
             <button> 
               <i  className="las la-bell"> </i>
@@ -69,16 +69,16 @@ const Navbar = () => {
                 <p>admin</p>
               </DropdownToggle>
               <DropdownMenu>
-                <DropdownItem className="dropDownItem" >
+                {/* <DropdownItem className="dropDownItem" >
                   <i className="las la-user-circle"></i>
                   <p className="itemTitle">{t("profile")}</p>
-                </DropdownItem>
-                <DropdownItem divider />
+                </DropdownItem> */}
+                {/* <DropdownItem divider />
                 <DropdownItem className="dropDownItem" >
                   <i className="las la-lock"></i>
                   <p className="itemTitle">{t("password")}</p>
                 </DropdownItem>
-                <DropdownItem divider />
+                <DropdownItem divider /> */}
                 <DropdownItem onClick={()=> {dispatch(logout())}} className="dropDownItem" >
                   <i className="las la-sign-out-alt"></i>
                   <p className="itemTitle">{t("logout")}</p>

@@ -1,11 +1,12 @@
 
 import ComposedTopBottom from "./cells/composedTopBottom";
 import ComposedLined from "./cells/composedLined";
-
+import DateComponent from  "./cells/dateComponent"
 
 const cells = {
     composedTopBottom : ComposedTopBottom,
-    composedLined :ComposedLined
+    composedLined :ComposedLined,
+    date : DateComponent
 }
 
 

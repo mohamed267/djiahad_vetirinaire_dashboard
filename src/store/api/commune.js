@@ -5,7 +5,7 @@ import params from "./paramsGenerator"
 
 export const getCommunes = async (query) => {
     const data = 
-    await axios.get(`address/wilaya`, {
+    await axios.get(`address/commune`, {
         params : {
             ...params(query , "eq" , true)
         }
