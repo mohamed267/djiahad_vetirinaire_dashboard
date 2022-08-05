@@ -1,0 +1,25 @@
+.select_form_group {
+    * {
+        // & :not(.form-label){
+        //     margin : 0 0 0 0 !important;
+        //     padding : 0 0 0 0 !important
+
+        // }
+    }
+    [class$="ValueContainer"] , [class$="-Input"]{
+        padding : 0  0 0 0 ;
+        margin : 0 0 0 0 ;
+    }
+    [class$="-Input"]{
+        height: 35px;
+    }
+    input{
+        height: 38px;
+        padding: 10px 20px;
+        background-color: transparent;
+        font-size: 0.875rem !important;
+        width: 100%;
+        color: #495057;
+        border: 1px solid #ced4da
+    }
+}
