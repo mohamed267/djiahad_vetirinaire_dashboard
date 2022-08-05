@@ -4,7 +4,7 @@ import {useLocation } from "react-router-dom"
 import {useDispatch} from "react-redux"
 import {login , logout} from "../../store/authReducer"
 
-import Form from "../../components/form/form"
+import Form from "../../components/form/formCreate"
 import structures from "../../structures/form"
 import Bg from "../../assets/images/bg.png"
 

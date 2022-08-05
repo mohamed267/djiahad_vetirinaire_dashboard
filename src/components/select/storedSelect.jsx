@@ -20,7 +20,9 @@ const SelectComponent  =({id ,value ,  label ,
    
     useEffect( ()=>{
         
-    }, [selectOptions])
+        console.log("value is  field ", field,  value)
+        
+    }, [value])
 
 
     const handleChange = (e) =>{
@@ -32,7 +34,6 @@ const SelectComponent  =({id ,value ,  label ,
 
         let deleted = [];
         if(isMulti){
-            console.log("value is ", value)
             value  && value.map(option =>{
                 let el = e.find(
                     key=>(

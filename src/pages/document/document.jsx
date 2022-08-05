@@ -4,28 +4,17 @@ import {useLocation  ,Link,   useParams} from 'react-router-dom'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import Sidebar from  "../../components/sidebar/sidebar"
 import Navbar from "../../components/navbar/navbar"
-import {Breadcrumb, Container , Row,Col , BreadcrumbItem} from "reactstrap"
+import {Breadcrumb, Container , Row,Col , Button, BreadcrumbItem} from "reactstrap"
 import "./document.scss"
 
 import {getForm , setDataExtracted  , setFilteredData} from "../../store/formReducer"
-import {extractData } from "../../utils/document"
+import dataHandler from "../../utils/document"
 import {toLocal} from "../../utils/date"
 
 
 
 
-// const  extractData = (data)=>{
-//     const {address_fields} = data
-//     let filtObg ={}
 
-//     address_fields && address_fields.length >0 &&
-//     address_fields.map(field =>{
-        
-//     })
-
-
-
-// }
 
 
 const filterData  = (data) =>{
@@ -67,6 +56,8 @@ const Document = ()=>{
     const dispatch = useDispatch()
     const {form_id} = useParams()
     const {form } = useSelector(state=>state.form.details)
+    
+    const opened = useSelector(state=>state.nav.opened)
     const [page , setPage] = useState(0)
     const [pages , setPages] = useState(0);
     const [isMobile, setIsMobile] = useState(true);
@@ -92,7 +83,7 @@ const Document = ()=>{
     useEffect( ()=>{
         
         console.log("fildd  ", form)
-        let extracted = extractData(form)
+        let extracted = dataHandler.extractData(form)
         let filtered = isMobile ?filterData(extracted) : [extracted]
         setFiltereddata(filtered)
     }, [form , isMobile])
@@ -104,7 +95,7 @@ const Document = ()=>{
     return(
         <div className="flex document">
             <Sidebar />
-            <div className="documentContainer">
+            <div className={`documentContainer ${opened ? "nav-opened" : "nav-closed"}`}>
                 <Navbar />
 
                 <Container className="py-4">
@@ -144,6 +135,18 @@ const Document = ()=>{
                                                             <p className="divider mx-4"></p>
                                                         </Col>
                                                     )
+                                                }else if(el.type=="gps"){
+                                                    return (
+                                                        <Col  className='property d-flex my-4    gap-1 align-items-center flex-column  '>
+                                                            <p className="prop_name">{el.name}</p>
+                                                            <a href={`https://maps.google.com/?q=${el.value}`} target="_blank">
+                                                                <Button className="gps-button">
+                                                                    <i className="las la-map-marker "></i>
+                                                                </Button>
+                                                                <p>{el.value}</p>
+                                                            </a>
+                                                        </Col>
+                                                    )
                                                 }else if(el.type=="property"){
                                                     return (
                                                         <Col  className='property d-flex my-4    gap-1 align-items-center flex-column  '>
@@ -153,10 +156,12 @@ const Document = ()=>{
                                                     )
                                                 }else if(el.type=="text"){
                                                     return (
-                                                        <Col className='w-100 p-3 property_text d-flex  gap-3 align-items-center flex-column  '>
-                                                            <p className="prop_text_value">{el.value}</p>
-                                                        
-                                                        </Col>
+                                                        <PerfectScrollbar style={{maxHeight : "150px"}}>
+                                                            <Col className='w-100 p-3 property_text d-flex  gap-3 align-items-center flex-column  '>
+                                                                <p className="prop_text_value">{el.value}</p>
+                                                            
+                                                            </Col>
+                                                        </PerfectScrollbar>
                                                     )
                                                 }
                                             })

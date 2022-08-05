@@ -8,10 +8,7 @@ const InputComponent  =({id ,value ,  label , icon ,
     
     
     // value={type=="date" ? defaultValue  : value}
-    
-    console.log("data ", value)
     const date = new Date(value);
-    console.log("date is ", date)
     const futureDate = date.getDate() + 3;
     date.setDate(futureDate);
     const defaultValue = date.toLocaleDateString('en-CA');

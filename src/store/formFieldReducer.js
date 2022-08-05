@@ -16,7 +16,9 @@ export const initialState = {
         error: false,
         loading: false,
         form_field : {},
-        dataExtracted : []
+        dataExtracted : [],
+        created : false , 
+        updated : false
 
     },
     pages: 0
@@ -72,6 +74,7 @@ export const createFormField = createAsyncThunk(
 )
 
 
+
 export  const updateFormField = createAsyncThunk(
     "form_field/update",
     async ({form_field_id ,  ...query}, thunkAPI) => {
@@ -92,10 +95,10 @@ export  const updateFormField = createAsyncThunk(
         }
 
     }
-)
-
-export const getFormFieldsNav = createAsyncThunk(
-    "form_field/fetchNav",
+    )
+    
+    export const getFormFieldsNav = createAsyncThunk(
+        "form_field/fetchNav",
     async (query, thunkAPI) => {
         try {
             const response = await FormFieldApi.getFormFieldsNav({
@@ -117,12 +120,12 @@ export const getFormFieldsNav = createAsyncThunk(
         }
 
     }
-)
-
-
-export const getFormFields = createAsyncThunk(
-    "form_field/fetchAll",
-    async (query, thunkAPI) => {
+    )
+    
+    
+    export const getFormFields = createAsyncThunk(
+        "form_field/fetchAll",
+        async (query, thunkAPI) => {
         try {
             const response = await FormFieldApi.getFormFields(query)
             console.log("response is ", response)
@@ -142,14 +145,41 @@ export const getFormFields = createAsyncThunk(
         }
 
     }
-)
+    )
+    export const deleteFormFields = createAsyncThunk(
+        "form_field/delete",
+        async (query, thunkAPI) => {
+            try {
+                console.log("query delet ",query)
+                await FormFieldApi.deleteFormFields(query)
+    
+                return (true)
+    
+            } catch (error) {
+                const message =
+                    (error.response &&
+                        error.response.data &&
+                        error.response.data.message) ||
+                    error.message ||
+                    error.toString();
+                thunkAPI.dispatch(setMessage(message));
+                return thunkAPI.rejectWithValue();
+            }
+    
+        }
+    )
 
-export const formSlice = createSlice({
-    name: 'form_field',
+    export const formSlice = createSlice({
+        name: 'form_field',
     reducers : {
         setNav : (state , action) =>{
             state.nav = action.payload;
-        }
+        },
+        initFormField: (state , action) =>{
+            state.deleted = false;
+             state.loading = false;
+              state.error = false;
+        },
     },
     initialState,
     extraReducers: {
@@ -226,6 +256,21 @@ export const formSlice = createSlice({
             state.details.loading = false;
             state.details.error = true;
         },
+
+        /*delete forms  */
+        [deleteFormFields.pending]: (state, action) => {
+            state.loading = true
+        },
+        [deleteFormFields.fulfilled]: (state, action) => {
+            state.details.form = action.payload
+            state.loading = false
+            state.error = false
+            state.deleted =  true 
+        },
+        [deleteFormFields.rejected]: (state, action) => {
+            state.loading = false;
+            state.error = true;
+        },
     }
 })
 
@@ -233,7 +278,7 @@ export const formSlice = createSlice({
 
 const { reducer, actions } = formSlice;
 
-export const { setNav } = actions
+export const { setNav , initFormField } = actions
 
 export default reducer
 

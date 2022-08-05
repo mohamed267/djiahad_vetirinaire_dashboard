@@ -13,14 +13,8 @@ const routes = [
     {
         exact: true,
         guard: AuthGuard,
-        path: '/',
-        component: lazy(() => import('./pages/home/home'))
-    },
-    {
-        exact: true,
-        guard: AuthGuard,
         path: '/region/new',
-        component: lazy(() => import('./pages/region/region'))
+        component: lazy(() => import('./pages/region/new'))
     },
     {
         exact: true,
@@ -46,6 +40,20 @@ const routes = [
         guard: AuthGuard,
         path: '/form_field/:form_field_id',
         component: lazy(() => import('./pages/form_field/single'))
+    },
+    
+    
+    {
+        exact: true,
+        guard: AuthGuard,
+        path: '/',
+        component: lazy(() => import('./pages/list/list'))
+    },
+    {
+         exact: true,
+        guard: AuthGuard,
+        path : "/document",
+        component: lazy(() => import('./pages/list/list'))
     },
     {
         exact: true,

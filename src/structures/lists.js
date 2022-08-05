@@ -154,13 +154,16 @@ const document = {
             field: 'form_id', headerName: ['ID']
         },
          { 
-            field: 'farm_name', headerName: ['nom de farme']
-        },
+            field: 'farm_name', headerName: ['nom de la ferme'],
+            width : 180
+        }
+        ,
         { 
             field: {
                 field : 'date'
             }, headerName: ['date de consultation'] ,
             component : "date",
+            width : 180
         },
         {
             field: {
@@ -170,7 +173,14 @@ const document = {
                         link : "/document",
                         field : "form_id",
                         class:"las la-desktop btn-show-more"
-                    } 
+                    },
+                    {
+                        type : "actionButton",
+                        field : "form_id",
+                        for : "delete",
+                        class:"las la-trash-alt btn-delete"
+                    },
+
                 ],
             },
             
@@ -202,7 +212,13 @@ const form_field = {
                         link : "/form_field",
                         field : "form_field_id",
                         class:"las la-desktop btn-show-more"
-                    } 
+                    } ,
+                    {
+                        type : "actionButton",
+                        field : "form_field_id",
+                        for : "delete",
+                        class:"las la-trash-alt btn-delete"
+                    },
                 ],
             },
             

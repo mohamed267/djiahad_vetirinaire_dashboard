@@ -19,10 +19,10 @@ const store = configureStore({
     composeWithDevTools()
 );
 
-// export const useSelector = useReduxSelector;
+export const useSelector = useReduxSelector;
 
 
-// export const useDispatch = () => useReduxDispatch();
+export const useDispatch = () => useReduxDispatch();
 
 const persister = persistStore(store);
 

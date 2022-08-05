@@ -3,6 +3,8 @@ import "./sidebar.scss"
 import {Link} from 'react-router-dom'
 import {useSelector} from "react-redux"
 
+import PerfectScrollbar from 'react-perfect-scrollbar'
+
 // import HomeIcon from '@mui/icons-material/HomeOutlined';
 import { useTranslation } from 'react-i18next';
 import menuItems from  "../../menu-items"
@@ -12,11 +14,12 @@ import Logo from "../../assets/images/logo.png"
 const Sidebar = () => {
   const {t} =  useTranslation("common")
   const nav = useSelector(state=>state.nav.nav)
+  const opened = useSelector(state=>state.nav.opened)
   return (
       <>
-         <div className="sideBarImage" style={{backgroundImage : `url(${Logo})` }}>
+         <div className={`sideBarImage fixed ${opened ? "closed" : ""}`} style={{backgroundImage : `url(${Logo})` }}>
       </div>
-        <div className="sidebar">
+        <div className={`sidebar fixed ${opened ? "closed" : ""}`}>
           <div className="top">
             <span className="logo">
               <Link to="/">
@@ -24,7 +27,9 @@ const Sidebar = () => {
               </Link>
               </span>
           </div>
+
           <div className="center">
+            <PerfectScrollbar style={{maxHeight : "500px" , paddingBottom : "100px"}}>
             <ul>
             {
               menuItems && menuItems.items && 
@@ -62,6 +67,7 @@ const Sidebar = () => {
               />
             } 
             </ul>
+            </PerfectScrollbar>
             {/* <ul>
               <p className="title" >{t("main")}</p>
               <li> 
@@ -129,10 +135,10 @@ const Sidebar = () => {
 
             </ul> */}
           </div>
-          <div className="bottom">
+          {/* <div className="bottom">
             <div className="colorOption"></div>
             <div className="colorOption"></div>
-          </div>
+          </div> */}
         </div>
       </>
   )

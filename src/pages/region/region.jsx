@@ -16,6 +16,7 @@ import './region.scss'
 
 const Region = ()=>{
     const {t} = useTranslation("common")
+    const opened = useSelector(state=>state.nav.opened)
     const region = useSelector(state=>state.region.details.region)
     const loading  = useSelector(state=>state.region.loading);
     const  dispatch = useDispatch();
@@ -68,7 +69,7 @@ const Region = ()=>{
     return(
         <div className="region">
          <Sidebar />
-        <div className="regionContainer">
+        <div className={`regionContainer ${opened ? "nav-opened" : "nav-closed"}`}>
             <Navbar />
 
             <div className="mainContainer">

@@ -24,11 +24,11 @@ export const createForm = async (query) => {
     // return await axios.get('global/teacher', { email, password })
 }
 
-export const getForms =  async({page , limit ,filter ,  ...query}) => {
+export const getForms =  async({page , limit ,filter , search ,  ...query}) => {
     const data = 
     await axios.get(`form`, {
         params : {
-            page , limit ,filter,
+            page , limit ,filter, search, 
             ...params(query , "eq" , true)
         }
     })
@@ -50,12 +50,26 @@ const updateForm =  async (query , param) => {
     // return await axios.get('global/teacher', { email, password })
 }
 
+const deleteForms =  async (query ) => {
+    const data = await axios.delete(`form`, 
+    {
+        params : {
+            ...params(query , "eq" , true)
+        }
+    }
+    )
+     
+    return (data)
+    // return await axios.get('global/teacher', { email, password })
+}
 
 
 
 
 
-const FormApi = { getForm , createForm , getForms , updateForm}
+
+
+const FormApi = { getForm , createForm , getForms , updateForm , deleteForms}
 
 export default FormApi
 

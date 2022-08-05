@@ -1,4 +1,5 @@
 import "./datatable.scss"
+import {useState, useEffect , useRef } from "react"
 import { DataGrid , 
     gridPageCountSelector,
     gridPageSelector,
@@ -32,7 +33,7 @@ function CustomPagination() {
         color="primary"
         variant="outlined"
         shape="circular"
-        page={page + 1}
+        page={page-1}
         count={pageCount}
         // @ts-expect-error
         renderItem={
@@ -43,7 +44,8 @@ function CustomPagination() {
             
         }
         onChange={(event, value) => {
-            apiRef.current.setPage(value - 1)
+            console.log("page is changign ", value)
+            apiRef.current.setPage(value-1)
         }}
       />
     );
@@ -51,10 +53,9 @@ function CustomPagination() {
 
 
 
-const Datatable  = ({structure , row ,  data , direct,dataKey ,  dataCode})=>{
+const Datatable  = ({structure , row ,  data , direct,dataKey , pageChanged ,  dataCode})=>{
     const {t} = useTranslation("common")
     const colums = extractColumns(structure.columns ,  t);
-    console.log("data is " , data)
 
     return(
     <div 
@@ -62,17 +63,19 @@ const Datatable  = ({structure , row ,  data , direct,dataKey ,  dataCode})=>{
             <DataGrid
                 localeText={ arSD.components.MuiDataGrid.defaultProps.localeText}
                 headerClassName="header-class"
+                paginationMode="server"
                 rows={data[dataKey]}
                 columns={colums}
                 pageSize={9}
+                rowCount={data.pages}
                 getRowId={(row) => row[structure.keyId]}
-                rowsPerPageOptions={[5]}
+                onPageChange={(newPage)=>{pageChanged(newPage + 1 ) }}
                 checkboxSelection
                 disableSelectionOnClick
-                components={{
-                    Pagination: CustomPagination ,
+                // components={{
+                //     Pagination: CustomPagination ,
                     
-                }}
+                // }}
             />
         
     </div>

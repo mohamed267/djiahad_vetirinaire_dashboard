@@ -1,7 +1,9 @@
 .form_field{
     display:flex ; 
     justify-content: space-between;
-    width : 100%;
+    width: 100%;
+    max-width: 100vw;
+    overflow: hidden;
     .form_fieldContainer{
         flex : 6;
         .mainContainer {
@@ -10,6 +12,7 @@
             padding : 20px;
             align-items : start;
             gap : 20px;
+    min-height: 100vh;
         }
     }
 }

@@ -1,4 +1,5 @@
-import {Link} from  "react-router-dom"
+
+import {Link , useLocation} from  "react-router-dom"
 import "./composedLined.scss"
 
 import {exportData} from  "../../../../utils/data"
@@ -15,14 +16,28 @@ const  extractState = (data  , field)=>{
 }
 
 const ComposedLined  =({structure , params})=>{
+    const location = useLocation()
     return(
         <div className="composedLinedContainer">
             {
                 structure  && 
                 structure.fields &&
                 structure.fields.map(el=>{
-                    return  (
-                        (el.type == "linkButton") &&
+                    if(el.type =="actionButton"){
+                        return (
+                            <Link to={location.pathname?location.pathname : ""}
+                            state ={{
+                                [el.field] :exportData(params.row ,  el.field) ,
+                                for : el.for
+                            }}
+                        >
+                            <button>
+                                <i className={el.class}></i>
+                            </button>
+                        </Link>
+                        )
+                    }else if  (el.type == "linkButton"){
+                        return  (
                             <Link to={`${el.link}/${exportData(params.row ,  el.field)}`}
                                 state ={extractState(params.row , el.state)}
                             >
@@ -31,7 +46,8 @@ const ComposedLined  =({structure , params})=>{
                                 </button>
                             </Link>
                         
-                    )
+                        )
+                    }
                 })
             }
         </div>

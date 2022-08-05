@@ -3,6 +3,7 @@ import {useDispatch} from "react-redux"
 import { useTranslation } from 'react-i18next';
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import LanguageSelector from  "./languageSelector/languageSelector"
+import {toogleNavOpened} from "../../store/navReducer"
 import "./navbar.scss"
 
 
@@ -36,7 +37,7 @@ const Navbar = () => {
             </button>
         </div>
         <div className="left">
-          <button >
+          <button onClick={()=>{dispatch(toogleNavOpened({}))}} >
             <i className="las la-compress-arrows-alt"></i>
           </button>
         </div>

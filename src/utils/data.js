@@ -2,7 +2,6 @@ const dataProf = (data , field) =>{
   if(field){
     let listField = field.split(".");
     listField.forEach(el=>{
-        console.log("field ", field ,data[el])
         if(data && data[el]){
             data  = data[el] 
         }else{
@@ -38,6 +37,7 @@ const dataFilter = (data ,  field)=>{
 }
 
 export const exportData = (data , field)=>{
+    console.log("extracting data ", field, data)
     if(typeof(field)=="string"){
         return dataProf(data, field)
     }else{
@@ -65,7 +65,6 @@ export const reformate = (data, field)=>{
             snapData = slider;
             listField.forEach((el, key)=>{
                 if(key == listField.length-1 ){
-                    console.log("key ", key , el , listField.length)
                     slider[el] = data
                 }else{              
                     slider[el] = {};
@@ -76,9 +75,6 @@ export const reformate = (data, field)=>{
             })
         }
     }
-
-
-    console.log("snap data is ", snapData)
 
 
     return snapData

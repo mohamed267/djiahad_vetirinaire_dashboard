@@ -133,7 +133,6 @@ const form_field = {
             creatable : true,
             field : "field_group",
             name: "field_group",
-            className:"z-index-10000",
             options : {
                 key : "field_groups",
                 where : "field_group",
@@ -150,7 +149,6 @@ const form_field = {
             label : "type field",
             field : "form_field_type",
             name: "form_field_type",
-            className:"z-index-10000",
             options : {
                 options : [
                     {value : "NUMBER" , label : "number"},
@@ -233,5 +231,7 @@ const nav = {
 
 
 
-export default {login , region , form_field , nav};
+
+
+export default {login , region , form_field , nav };
 

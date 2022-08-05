@@ -1,4 +1,4 @@
-exports.extractData = (form)=>{
+const extractData = (form)=>{
 
 
     let objFields = {}
@@ -8,17 +8,16 @@ exports.extractData = (form)=>{
     if(form){
         extractedData = [
             {type : "title"  ,  label : "région" },
-            {type : "property",
-            value : form.region ? form.region.region_name ?
-            form.region.region_name :"N/A":"N/A" , name : "région"},
+           
             {type : "property",
             value : form.wilaya ? form.wilaya.wilaya_name ?
             form.wilaya.wilaya_name :"N/A":"N/A" , name : "wilaya"},
             {type : "property",
+            value : form.daira ? form.daira.daira_name ?
+            form.daira.daira_name :"N/A":"N/A" , name : "daira"},
+            {type : "property",
             value : form.commune ? form.commune.commune_name ?
-            form.commune.commune_name :"N/A":"N/A" , name : "wilaya"},
-            
-        
+            form.commune.commune_name :"N/A":"N/A" , name : "commune"},
         ]
 
 
@@ -26,7 +25,12 @@ exports.extractData = (form)=>{
         let address_fields = form && form.address_fields
         let string_fields = form && form.string_fields
         let boolean_fields = form && form.boolean_fields
+        let number_fields = form && form.number_fields
+        let text_fields =  form && form.text_fields
+        let date_fields =  form && form.date_fields
 
+
+        console.log("address field are ", address_fields)
 
         address_fields && address_fields.map(field=>{
             let address = field.address;
@@ -48,6 +52,7 @@ exports.extractData = (form)=>{
             }
 
             if(lat && lng){
+                
                 objFields[priority].fields.push({
                     type : "gps",
                     name: form_field_name,
@@ -55,10 +60,12 @@ exports.extractData = (form)=>{
                 })
 
             }else{
+                 
                 objFields[priority].fields.push({
                     type : "property",
                     name : form_field_name,
-                    value : address , name : form_field_name ,
+                    value : address ? address :"N/A" , 
+                    name : form_field_name ,
                 })
 
             }
@@ -67,6 +74,11 @@ exports.extractData = (form)=>{
         string_fields && string_fields.map(field=>{
             let value = field.field_value
             value = typeof(value) == "string" ? value.split("_*_").join(" ") : ""
+
+            value = value ?value : "N/A"
+
+
+            
 
             let form_field = field.form_field
             let form_field_name = form_field.form_field_name
@@ -87,14 +99,36 @@ exports.extractData = (form)=>{
                 type : "property",
                 value : value , name : form_field_name ,
             })
-
-           
-
         })
 
-        boolean_fields && boolean_fields.map(field=>{
-            let value = field.field_value
-            value = typeof(value) == "string" ? value.split("_*_").join(" ") : ""
+
+        text_fields && text_fields.map(field=>{
+            
+            let value = field.field_value ?field.field_value : "N/A"
+
+            let form_field = field.form_field
+            let form_field_name = form_field.form_field_name
+            /*-------*/
+            let field_group = form_field.field_group
+            let field_group_slug = field_group.field_group_slug
+            let field_group_name = field_group.field_group_name
+            let priority  = new Date(field_group.createdAt).getTime()
+
+            if(!objFields[priority]){
+                objFields[priority] = {};
+                objFields[priority].group = {type : "title"  , slug : field_group_slug  ,label : field_group_name }
+                objFields[priority].fields = [];
+                priorities.push(priority)
+            }
+
+            objFields[priority].fields.push({
+                type : "text",
+                value : value , name : form_field_name ,
+            })
+        })
+
+        number_fields && number_fields.map(field=>{
+            let value = field.field_value 
 
             let form_field = field.form_field
             let form_field_name = form_field.form_field_name
@@ -113,69 +147,18 @@ exports.extractData = (form)=>{
 
             objFields[priority].fields.push({
                 type : "property",
-                value : value ? 'oui' : 'non' , 
+                value : value , 
                 name : form_field_name ,
             })
-
-           
-
         })
-    }
 
-    
-    Object.keys(objFields).map(key=>{
-        let priority =  objFields[key]
-        extractedData.push(priority.group)
-        extractedData = [...extractedData , ...priority.fields]
-    })
+        boolean_fields && boolean_fields.map(field=>{
+            let value = field.field_value
 
-
-    return extractedData
-
-
-    
-    return (
-        [
-            {type : "title" , label : "rigion"},
-            {type : "property" , name : "wilaya" , value : "khenchella"},
-            // {type : "property" , name : "daira" , value : "el-hama"},
-            // {type : "property" , name : "commune" , value : "beghai"},
-            {type : "title" , label : "caractères"},
-            {type : "property" , name : "climat" , value : "sec"},
-            {type : "property" , name : "géographie" , value : "plateaux"},
-            {type : "property" , name : "températeur" , value : "haux 32°"},
-            {type : "title" , label : "propriétaire"},
-            {type : "property" , name : "nom" , value : "boulague"},
-            {type : "property" , name : "prénom" , value : "maamar"},
-            {type : "property" , name : "age" , value : "60"},
-            {type : "property" , name : "numéro de téléphone" , value : "068925154875"},
-            {type : "property" , name : "address" , value : "rue douawdi abd elhamid khenchela algirir"},
-            {type : "property" , name : "cordoné gps" , value : "N/A"},
-            {type : "title" , label : "le traitement préventive"},
-            {type : "property" , name : "produit contre le mouche" , value : "true"},
-            {type : "property" , name : "déparasitage saisoni`re" , value : "true"},
-            {type : "property" , name : "températeur" , value : "32°"},
-            {type : "title" , label : "historique de l'animale"},
-            {type : "text" ,  value : "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."},
-        ]
-    )
-}
-
-
-exports.extractFor = (form_fields)=>{
-
-    let objFields = {}
-    let priorities = []
-
-    form_fields && form_fields.map(form_field=>{
-
-        
-        let string_fields = form_field && form_field.string_fields
-        string_fields && string_fields.map(field=>{
-            let form_field_id = form_field.form_field_id
+            let form_field = field.form_field
             let form_field_name = form_field.form_field_name
-            let form_field_type = form_field.form_field_type
-            let field_options =  form_field.field_options
+
+
             /*-------*/
             let field_group = form_field.field_group
             let field_group_slug = field_group.field_group_slug
@@ -189,84 +172,76 @@ exports.extractFor = (form_fields)=>{
                 priorities.push(priority)
             }
 
-            let type = ""
-            let typeInput = ""
-            let xl = 6
 
-            if(form_field_type =="SELECT"){
-                type = "select"
-            }else if(form_field_type =="STRING"){
-                type = "input"
-                typeInput = "text"
-            }else if(form_field_type =="TEXT"  ){
-                type = "textarea";
-                xl = 12;
-            }else if(form_field_type =="NUMBER"  ){
-                type = "input"
-                typeInput = "number"
-            }else if(form_field_type =="DATE"  ){
-                type = "input"
-                typeInput = "date"
-            }else if(form_field_type =="ADDRESS"  ){
-                type = "address";
-                xl = 12;
-            }
-            if(form_field_type =="SELECT"){
-                objFields[priority].fields.push( {
-                    type : "select", 
-                    label : "type field",
-                    field : "form_field_type",
-                    name: "form_field_type",
-                    options : field_options ? field_options :[] ,        
-                    // icon : "las la-lock input-icon",
-                    placeholder : "enter your wilayas",
-                    xl :6,
-                    id :  "wilayas"
-                })
-
-            }else{
-
-                objFields[priority].fields.push({
-                    type : type, 
-                    label : form_field_name,
-                    name: `${form_field_name}__${form_field_id}`,
-                    typeInput : typeInput,
-                    field : form_field_id,
-                    placeholder : "",
-                    xl :xl,
-                    id :  `${form_field_name}__${form_field_id}`,
-                })
-            }
+            objFields[priority].fields.push({
+                type : "property",
+                value : value ? 'oui' : 'non' , 
+                name : form_field_name ,
+            })
         })
-    })
 
+        date_fields && date_fields.map(field=>{
+            let value = field.field_value ?field.field_value : "N/A"
 
-   
+            let form_field = field.form_field
+            let form_field_name = form_field.form_field_name
+            /*-------*/
+            let field_group = form_field.field_group
+            let field_group_slug = field_group.field_group_slug
+            let field_group_name = field_group.field_group_name
+            let priority  = new Date(field_group.createdAt).getTime()
 
-    let extractedData= []
+            if(!objFields[priority]){
+                objFields[priority] = {};
+                objFields[priority].group = {type : "title"  , slug : field_group_slug  ,label : field_group_name }
+                objFields[priority].fields = [];
+                priorities.push(priority)
+            }
 
-    Object.keys(objFields).map(key=>{
-        let priority =  objFields[key]
-        extractedData.push(priority.group)
-        extractedData = [...extractedData , ...priority.fields]
-    })
-
-
-    return {
-         type : "row",
-        className : "w-100 ",
-        fields : extractedData ? extractedData :[]
+            objFields[priority].fields.push({
+                type : "date",
+                value : value , 
+                name : form_field_name ,
+            })
+        })
 
     }
+
+
+
+    priorities.sort()
+
+
+    priorities.forEach(priority=>{
+        let group =  objFields[priority]
+        extractedData.push(group.group)
+        extractedData = [...extractedData , ...group.fields]
+
+    })
+
+
+
+    
+    return extractedData
+
+
+    
+    
 
 }
 
 
-exports.extractForm = (form_fields)=>{
 
+
+    
+
+
+
+
+const extractForm = (form_fields)=>{
+    
     let objFields = {}
     let priorities = []
-
     form_fields && form_fields.map(form_field=>{
         let field_group = form_field.field_group
         let field_group_slug = field_group.field_group_slug
@@ -364,16 +339,32 @@ exports.extractForm = (form_fields)=>{
                 id :  `${form_field_name}__${form_field_id}`
             })
 
+        }else if(form_field_type =="BOOLEAN"){
+
+                objFields[priority].fields.push( {
+                    type : "switch", 
+                    label : form_field_name ,
+                    field : form_field_id.toString(),
+                    checkedOn : true,
+                    on : form_field_name,
+                    off : `non ${form_field_name}`,
+                    name: `${form_field_name}__${form_field_id}`,   
+                    // icon : "las la-lock input-icon",
+                    placeholder : "",
+                    xl :4,
+                    id :  `${form_field_name}__${form_field_id}`
+                })
+    
         }else{
 
             objFields[priority].fields.push({
                 type : type, 
                 label : form_field_name,
                 name: `${form_field_name}__${form_field_id}`,
-                typeInput : "text",
+                typeInput : typeInput,
                 field : form_field_id.toString(),
                 placeholder : "",
-                xl :12,
+                xl :xl,
                 id :  `${form_field_name}__${form_field_id}`,
             })
         }
@@ -386,8 +377,8 @@ exports.extractForm = (form_fields)=>{
     let extractedData= [
         {
             type : 'input', 
-            label : "farme name",
-            name: `farme name`,
+            label : "nom de la ferme",
+            name: `farme_name`,
             typeInput : "text",
             field : "farm_name",
             xl :6,
@@ -395,8 +386,8 @@ exports.extractForm = (form_fields)=>{
         },
         {
             type : 'input', 
-            label : "date enquete",
-            name: `farme name`,
+            label : "date de l'enquete",
+            name: `date de l'enquète`,
             typeInput : "date",
             field : "date",
             xl :6,
@@ -419,7 +410,7 @@ exports.extractForm = (form_fields)=>{
                 label :  "region_name",
                 value :  "region_id"
             } ,        
-            placeholder : "enter your region",
+            placeholder : "saidir votre région",
             xl :4,
             id :  "region"
         },
@@ -435,9 +426,25 @@ exports.extractForm = (form_fields)=>{
                 label :  "wilaya_name",
                 value :  "wilaya_id"
             } ,        
-            placeholder : "enter your wilaya",
+            placeholder : "saisir votre wilaya",
             xl :4,
             id :  "wilaya"
+        },
+        {
+            type : "select", 
+            label : "daira",
+            typeSelect : "store",
+            field : "daira",
+            name: "daira",
+            options : {
+                key : "dairas",
+                where : "daira",
+                label :  "daira_name",
+                value :  "daira_id"
+            } ,        
+            placeholder : "enter your daira",
+            xl :4,
+            id :  "daira"
         },
         {
             type : "select", 
@@ -459,11 +466,17 @@ exports.extractForm = (form_fields)=>{
 
     ]
 
-    Object.keys(objFields).map(key=>{
-        let priority =  objFields[key]
-        extractedData.push(priority.group)
-        extractedData = [...extractedData , ...priority.fields] 
+
+    priorities.sort()
+
+
+    priorities.forEach(priority=>{
+        let group =  objFields[priority]
+        extractedData.push(group.group)
+        extractedData = [...extractedData , ...group.fields]
+
     })
+
 
     extractedData.push(
         {
@@ -477,7 +490,7 @@ exports.extractForm = (form_fields)=>{
                 }
             ]
         })
-
+        console.log("our all extrated ", extractedData)
     return {
          type : "row",
         className : "w-100 ",
@@ -489,7 +502,7 @@ exports.extractForm = (form_fields)=>{
 
 
 
-exports.dataForm = (form) =>{
+const dataForm = (form) =>{
     let objData = {}
 
    
@@ -500,6 +513,7 @@ exports.dataForm = (form) =>{
         objData["region"] =  form.region
         objData["wilaya"] =  form.wilaya
         objData["commune"] =  form.commune
+        objData["daira"] =  form.daira
 
 
         let string_fields = form && form.string_fields
@@ -510,8 +524,8 @@ exports.dataForm = (form) =>{
 
             let form_type = field.form_field.form_field_type
             if(form_type =="COMPLEXSELECT"){
-                let field_options = field.form_field.field_options
                 let [field_value , extra] = value.split('_*_');
+                let field_options = field.form_field.field_options
 
                 let filtered = field_options  && field_options.filter(option=>{
                     return (option.field_option_value == field_value)
@@ -521,7 +535,7 @@ exports.dataForm = (form) =>{
                 objData[form_field_id.toString()] = obgVal
                 
             }
-             if(form_type =="SELECT"){
+            if(form_type =="SELECT"){
                 let field_options = field.form_field.field_options
 
                 let filtered = field_options  && field_options.filter(option=>{
@@ -533,8 +547,57 @@ exports.dataForm = (form) =>{
                 
             }
 
+            if(form_type =="STRING"){
+                let value = field.field_value
+                objData[form_field_id.toString()] = value
+                
+            }
+
            
 
+        })
+
+
+
+        
+
+
+
+        let fields =[] 
+
+        fields = form  && form.text_fields 
+
+        fields && fields.map(field=>{
+            let value = field.field_value
+            let form_field_id  = field.form_field_id
+            objData[form_field_id.toString()] = value
+        })
+        fields = form  && form.boolean_fields 
+
+        fields && fields.map(field=>{
+            let value = field.field_value
+            let form_field_id  = field.form_field_id
+            objData[form_field_id.toString()] = value
+        })
+        fields = form  && form.number_fields 
+
+
+        fields && fields.map(field=>{
+            let value = field.field_value
+            let form_field_id  = field.form_field_id
+            objData[form_field_id.toString()] = value
+        })
+
+        let address_fields = form && (form.address_fields )
+
+
+        address_fields && address_fields.map(field=>{
+            let form_field_id  = field.form_field_id
+            objData[form_field_id.toString()] = {
+                address : field.address,
+                lat : field.lat,
+                lng : field.lng
+            }
         })
 
 
@@ -562,8 +625,16 @@ exports.dataForm = (form) =>{
         // })
     }
 
+
+
     
 
 
     return objData
 }
+
+
+const document = {extractData , extractForm , dataForm}
+
+
+export default document

@@ -24,6 +24,7 @@ const FieldFrom = ()=>{
     const updated = useSelector(state=>state.form_field.details.updated)
     const created = useSelector(state=>state.form_field.details.created)
     
+    const opened = useSelector(state=>state.nav.opened)
 
 
     // const {region_id} = useParams()
@@ -35,7 +36,6 @@ const FieldFrom = ()=>{
 
 
     const handleUpdateFormField = (data) =>{
-        console.log("data is   form ", data)
         dispatch(updateFormField(
             {
                 ...data , 
@@ -46,8 +46,6 @@ const FieldFrom = ()=>{
         
         ))
     }
-
-    console.log("fffd " ,structures[location.pathname.slice(1).split('/')[0]])
    
 
 
@@ -59,7 +57,7 @@ const FieldFrom = ()=>{
                 (created || updated )  && <Navigate to="/form_field" />
             }
          <Sidebar />
-        <div className="form_fieldContainer">
+        <div className={`form_fieldContainer ${opened ? "nav-opened" : "nav-closed"}`}>
             <Navbar />
 
             <div className="mainContainer">

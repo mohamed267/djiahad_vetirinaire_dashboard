@@ -1,44 +1,61 @@
-import {FormGroup, Label , Button  } from  "reactstrap"
-import {useState , useEffect} from 'react'
-import {useSelector} from 'react-redux'
+
+import {Form , FormGroup ,Label , Input , Row , Col , Button } from  "reactstrap"
 import {useTranslation} from 'react-i18next'
-import MapModal from "./mapModal"
 
 
 
 
-const AddressComponent  =({id ,value ,  label , 
-    name , placeholder , className , type , field ,
+const AddressComponent  =({id ,value , 
+    name ,  className ,  field , type , label ,
     changed = ()=>{}})=>{
     const {t} = useTranslation("common");
-    const [modal , setModal] =  useState(false)
-    const toggle =()=>{
-        setModal(!modal)
-    }
 
-    const confirm =(position)=>{
+    const setPosition =(position)=>{
         changed(field , {...value ,  ...position})
     }
+
+
+    console.log("value gps is ", {lat : value.lat , lng : value.lng})
     
 
 
     return (
         <>
+        <FormGroup className={className}>
+            <Label for={id}>
+            {t(label)}
+            </Label>
+            <Row>
+                <Col md={6}>
+                    <Input
+                        id={"lat_"+id}
+                        name={name}
+                        placeholder={t("enter latitude")}
+                        type={"text"}
+                        value={value.lat}
+                        onChange={(e)=>{setPosition({lat :  e.target.value})}}
+                    />
+                </Col>
+                <Col md={6}>
+                    <Input
+                        id={"lng_"+id}
+                        name={"lng_"+name}
+                        placeholder={t("enter longtitude")}
+                        type={"text"}
+                        value={value.lng}
+                        onChange={(e)=>{setPosition({lng :  e.target.value})}}
+                    />
+                </Col>
+            </Row>
+            
+        </FormGroup>
        
             
-            <FormGroup className={className}>
-                <Label for={id}>
-                    {t(label)}
-                </Label>
-                <Button onClick={toggle} className="map-button" > préciser sur map 
-
-                    <i className="las la-map-marker-alt"></i>
-                </Button>
-            </FormGroup>
-            <MapModal 
-                modal={modal} setModal={setModal} toggle={toggle} confirm={confirm} 
-                value={value}                
-            />
+            
+            {/* <MapModal 
+                modal={modal} setModal={setModal} toggle={toggle} setPosition={setPosition} 
+                position={{lat : value.lat , lng : value.lng} }                 */}
+         
         </>
     )
 }

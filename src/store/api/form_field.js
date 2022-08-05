@@ -58,11 +58,25 @@ const updateFormField =  async (query , param) => {
     // return await axios.get('global/teacher', { email, password })
 }
 
+const deleteFormFields =  async (query ) => {
+    const data = await axios.delete(`form_field`, 
+    {
+        params : {
+            ...params(query , "eq" , true)
+        }
+    }
+    )
+     
+    return (data)
+    // return await axios.get('global/teacher', { email, password })
+}
 
 
 
 
-const FormFieldApi = { getFormField , getFormFields ,getFormFieldsNav,  createFormField , updateFormField}
+
+const FormFieldApi = { getFormField , getFormFields ,getFormFieldsNav,  createFormField ,
+     updateFormField , deleteFormFields}
 
 export default FormFieldApi
 

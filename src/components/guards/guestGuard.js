@@ -8,7 +8,7 @@ const GuestGuard = ({ children }) => {
     const { isLoggedIn } = auth;
 
     if (isLoggedIn) {
-        return <Navigate to={"/"} />;
+        return <Navigate to={"/document/filter"} />;
     }
 
     return <>{children}</>;

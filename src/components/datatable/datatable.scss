@@ -59,8 +59,7 @@ $end : right;
                 max-width: 100% !important;
                 flex : 1;
             }
-
-            &:last-child{
+            &:not([role="cell"]){
                 display : none
             }
         }
@@ -70,6 +69,14 @@ $end : right;
             background-color :  #474747;
             border-radius : 2px;
             color : #fff
+        }
+
+        .btn-delete{
+            padding : 5px;
+            background-color :  var(--red-danger);
+            border-radius : 2px;
+            color : #fff
+
         }
         
     }

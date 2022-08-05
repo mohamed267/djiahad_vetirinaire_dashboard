@@ -55,7 +55,7 @@ const LocationMarker =({range , setPosition , position})=>   {
 }
 
 const Regions =()=>   {
-  const {region_id} = useParams()
+    const {region_id} = useParams()
     const regions = useSelector(state=>state.region.regions)
 
 
@@ -162,6 +162,8 @@ const MapComponent = ({typeMap , changed ,field_radius , field_lng , field_lat ,
     changed('',{[field_lng] : lng ,[field_lat] : lat ,[field_radius] :  radius})
   }
 
+  
+
   const setPosition = (position)=>{
     console.log("radd ",  radius)
     changed('',{[field_lng] : position.lng ,[field_lat] : position.lat ,[field_radius] :  radius})
@@ -169,22 +171,41 @@ const MapComponent = ({typeMap , changed ,field_radius , field_lng , field_lat ,
   return (
     <>
       {typeMap=="range" && <Range min={10} max={1000} range={radius} setRange={setRange} />}
-      <MapContainer
-          center={{lat: 36.72, lng: 3.16} }
-          zoom={5}
-          className="map"
-        >
-        <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-        <Regions region={region_id} />
-        { region_id ? 
-        <RegionEdit setPosition={setPosition} position={{lat , lng}} radius={radius}  /> 
-        : 
-        <LocationMarker range={radius} position={{lat , lng}} setPosition={setPosition} />
-         }
-      </MapContainer>
+      {
+        region_id ? 
+      
+        <MapContainer
+            center={{lat: 36.72, lng: 3.16} }
+            zoom={5}
+            className="map"
+          >
+          <TileLayer
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          />
+          <Regions region={region_id} />
+          { region_id ? 
+          <RegionEdit setPosition={setPosition} position={{lat , lng}} radius={radius}  /> 
+          : 
+          <LocationMarker range={radius} position={{lat , lng}} setPosition={setPosition} />
+          }
+        </MapContainer> :<MapContainer
+            center={{lat: 36.72, lng: 3.16} }
+            zoom={5}
+            className="map"
+          >
+          <TileLayer
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          />
+          <Regions region={region_id} />
+          { region_id ? 
+          <RegionEdit setPosition={setPosition} position={{lat , lng}} radius={radius}  /> 
+          : 
+          <LocationMarker range={radius} position={{lat , lng}} setPosition={setPosition} />
+          }
+        </MapContainer>
+      }
     </>
   )
 

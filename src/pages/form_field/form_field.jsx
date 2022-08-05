@@ -20,6 +20,8 @@ const FieldFrom = ()=>{
     const location = useLocation();
     const loading = useSelector(state=>state.form_field.details.loading)
     const created = useSelector(state=>state.form_field.details.created)
+    
+    const opened = useSelector(state=>state.nav.opened)
     // const {region_id} = useParams()
 
 
@@ -50,7 +52,7 @@ const FieldFrom = ()=>{
                 created  && <Navigate to="/form_field" />
             }
          <Sidebar />
-        <div className="form_fieldContainer">
+        <div className={`form_fieldContainer ${opened ? "nav-opened" : "nav-closed"}`}>
             <Navbar />
 
             <div className="mainContainer">

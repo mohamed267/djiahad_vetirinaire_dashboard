@@ -13,6 +13,7 @@ export const initialState = {
         loading: false,
         filtereddata : [],
         dataExtracted : [],
+        created : false , 
         updated : false
 
     },
@@ -116,6 +117,29 @@ export const updateForm = createAsyncThunk(
     }
 )
 
+export const deleteForms = createAsyncThunk(
+    "form/delete",
+    async (query, thunkAPI) => {
+        try {
+            console.log("query delet ",query)
+            await FormApi.deleteForms(query)
+
+            return (true)
+
+        } catch (error) {
+            const message =
+                (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                error.message ||
+                error.toString();
+            thunkAPI.dispatch(setMessage(message));
+            return thunkAPI.rejectWithValue();
+        }
+
+    }
+)
+
 
 export const formSlice = createSlice({
     name: 'form',
@@ -128,6 +152,11 @@ export const formSlice = createSlice({
         },
         setDataExtracted : (state, action) => {
             state.details.dataExtracted = action.payload.dataExtracted
+        },
+        initForms : (state, action) => {
+            state.deleted = false
+            state.loading = false
+            state.error = false
         }
     },
     extraReducers: {
@@ -135,6 +164,7 @@ export const formSlice = createSlice({
         [getForm.pending]: (state, action) => {
             state.details.loading = true
             state.details.updated =  false 
+            state.details.created =  false 
         },
         [getForm.fulfilled]: (state, action) => {
             state.details.form = action.payload
@@ -153,6 +183,7 @@ export const formSlice = createSlice({
             state.details.form = action.payload
             state.details.loading = false
             state.details.error = false
+            state.details.created =  true 
         },
         [createForm.rejected]: (state, action) => {
             state.details.loading = false;
@@ -177,13 +208,29 @@ export const formSlice = createSlice({
         /*get forms */
         [getForms.pending]: (state, action) => {
             state.loading = true
+            state.details.created =  false 
         },
         [getForms.fulfilled]: (state, action) => {
             state.forms = action.payload.forms
+            state.pages =  action.payload.pages
             state.loading = false
             state.error = false
         },
         [getForms.rejected]: (state, action) => {
+            state.loading = false;
+            state.error = true;
+        },
+        /*delete forms  */
+        [deleteForms.pending]: (state, action) => {
+            state.loading = true
+        },
+        [deleteForms.fulfilled]: (state, action) => {
+            state.details.form = action.payload
+            state.loading = false
+            state.error = false
+            state.deleted =  true 
+        },
+        [deleteForms.rejected]: (state, action) => {
             state.loading = false;
             state.error = true;
         },
@@ -197,9 +244,36 @@ export const formSlice = createSlice({
 
 const { reducer, actions } = formSlice;
 
-export const { setFilteredData , setDataExtracted } = actions
+export const { setFilteredData , setDataExtracted , initForms } = actions
 
 export default reducer
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

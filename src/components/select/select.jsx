@@ -16,9 +16,6 @@ const SelectComponent  =({id ,value ,  label ,
     const {t} = useTranslation("common");
 
 
-    console.log("options are ", options)
-
-
 
     const handleValue  = (optionValue)=>{
         if(typeof(optionValue)=="string"){

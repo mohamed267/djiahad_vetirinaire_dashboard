@@ -5,6 +5,7 @@ import  auth from  "./authReducer"
 import  region from  "./regionReducer"
 import  wilaya from  "./wilayaReducer"
 import  commune from  "./communeReducer"
+import  daira from  "./dairaReducer"
 import field_group from "./fieldGroupReducer"
 import form_field from "./formFieldReducer"
 import apiMessage from './apiMessageReducer';
@@ -28,6 +29,7 @@ const reducers = combineReducers({
     form,
     region,
     wilaya,
+    daira ,
     commune,
     request,
     field_group,
